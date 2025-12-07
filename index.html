@@ -1,26 +1,61 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8" />
-<title>Control de Invernadero</title>
-<link rel="stylesheet" href="styles.css" />
-<script defer src="script.js"></script>
+<meta charset="UTF-8">
+<title>Dashboard Planta IoT</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+body { font-family: Arial; background:#f2f2f2; padding:20px; }
+.card { background:white; padding:20px; margin:10px; border-radius:10px; }
+.btn { padding:10px 20px; border:0; border-radius:8px; cursor:pointer; }
+</style>
 </head>
 <body>
 <h1>Panel de Control</h1>
 
-<div class="controls">
+<div class="card">
   <h2>Control Manual</h2>
-  <button onclick="toggle('riego')">Alternar Riego</button>
-  <button onclick="toggle('ventilacion')">Alternar Ventilación</button>
+  <button class="btn" onclick="sendCmd('riego_on')">Riego ON</button>
+  <button class="btn" onclick="sendCmd('riego_off')">Riego OFF</button>
+  <br><br>
+  <button class="btn" onclick="sendCmd('fan_on')">Ventilador ON</button>
+  <button class="btn" onclick="sendCmd('fan_off')">Ventilador OFF</button>
 </div>
 
-<div class="charts">
+<div class="card">
   <h2>Gráficas</h2>
-  <canvas id="humChart"></canvas>
-  <canvas id="airChart"></canvas>
+  <canvas id="humChart" width="300" height="150"></canvas>
+  <canvas id="airChart" width="300" height="150"></canvas>
 </div>
 
+<script>
+let humCtx = document.getElementById('humChart').getContext('2d');
+let airCtx = document.getElementById('airChart').getContext('2d');
+
+let humChart = new Chart(humCtx, {
+    type: 'line',
+    data: { labels: [], datasets: [{ label:'Humedad', data: [] }] }
+});
+let airChart = new Chart(airCtx, {
+    type: 'line',
+    data: { labels: [], datasets: [{ label:'Aire MQ135', data: [] }] }
+});
+
+function sendCmd(cmd){
+  fetch('/cmd?do=' + cmd);
+}
+
+setInterval(() => {
+  fetch('/data').then(r=>r.json()).then(d=>{
+     humChart.data.labels.push('');
+     humChart.data.datasets[0].data.push(d.humedad);
+     humChart.update();
+
+     airChart.data.labels.push('');
+     airChart.data.datasets[0].data.push(d.air);
+     airChart.update();
+  });
+}, 2000);
+</script>
 </body>
 </html>
