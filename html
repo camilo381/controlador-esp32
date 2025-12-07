@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Control ESP32 - Riego y Ventilación</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    body { font-family: Arial; background: #f4f4f4; padding: 20px; }
+    .btn { padding: 12px; margin: 10px; font-size: 18px; cursor: pointer; }
+    .on  { background: #4CAF50; color: white; }
+    .off { background: #d9534f; color: white; }
+    .panel { padding: 20px; background: white; border-radius: 10px; margin-bottom: 20px; }
+  </style>
+</head>
+<body>
+
+<h1>Control de Riego y Ventilación</h1>
+
+<div class="panel">
+  <h2>Controles Manuales</h2>
+
+  <button class="btn on" onclick="activar('riego')">Encender Riego</button>
+  <button class="btn off" onclick="desactivar('riego')">Apagar Riego</button>
+
+  <br>
+
+  <button class="btn on" onclick="activar('ventilacion')">Encender Ventilación</button>
+  <button class="btn off" onclick="desactivar('ventilacion')">Apagar Ventilación</button>
+</div>
+
+<div class="panel">
+  <h2>Lecturas en Tiempo Real</h2>
+  <canvas id="graficaHumedad" height="100"></canvas>
+  <canvas id="graficaMQ" height="100"></canvas>
+</div>
+
+<script src="main.js"></script>
+
+</body>
+</html>
