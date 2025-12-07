@@ -1,0 +1,4 @@
+
+body { font-family: Arial; padding: 20px; background:#eef; }
+button { padding:10px 20px; margin:5px; }
+canvas { width:100%; max-width:400px; height:300px; margin:20px 0; background:white; }

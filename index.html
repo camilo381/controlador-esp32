@@ -1,0 +1,26 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<title>Control de Invernadero</title>
+<link rel="stylesheet" href="styles.css" />
+<script defer src="script.js"></script>
+</head>
+<body>
+<h1>Panel de Control</h1>
+
+<div class="controls">
+  <h2>Control Manual</h2>
+  <button onclick="toggle('riego')">Alternar Riego</button>
+  <button onclick="toggle('ventilacion')">Alternar Ventilación</button>
+</div>
+
+<div class="charts">
+  <h2>Gráficas</h2>
+  <canvas id="humChart"></canvas>
+  <canvas id="airChart"></canvas>
+</div>
+
+</body>
+</html>
